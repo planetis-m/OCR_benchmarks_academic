@@ -68,3 +68,17 @@ benchmark/scientific_ocr/
 - `run_benchmark.py` keeps the benchmark output directories (`results/raw`, `results/ocr_text`) clean by recreating them on each run.
 - The runner estimates token usage/cost from OCR text length because `pdfocr` JSONL output does not expose provider usage fields.
 - The benchmark dataset is fixed in-repo (consolidated PDF + manifests + locked gold labels).
+
+## Current results (gold labels)
+
+| Model | Coverage | CER | WER | ReadingOrderF1 | MathF1 | TokenRecall | CharLCSRecall | Cost (USD) | RobustBalanced |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| allenai/olmOCR-2-7B-1025 | 1.000 | 0.4682 | 0.4893 | 0.3252 | 0.6743 | 0.8146 | 0.8496 | 0.0214 | 0.5232 |
+| PaddlePaddle/PaddleOCR-VL-0.9B | 1.000 | 0.4634 | 0.4732 | 0.3751 | 0.7248 | 0.7678 | 0.7924 | 0.0420 | 0.4945 |
+| deepseek-ai/DeepSeek-OCR | 1.000 | 0.5862 | 0.6512 | 0.1452 | 0.4684 | 0.6857 | 0.7235 | 0.0041 | 0.6540 |
+
+- Accuracy-first (strict): `PaddlePaddle/PaddleOCR-VL-0.9B`
+- Accuracy-first (robust): `allenai/olmOCR-2-7B-1025`
+- Cost-first: `deepseek-ai/DeepSeek-OCR`
+- Balanced (strict): `deepseek-ai/DeepSeek-OCR`
+- Balanced (robust): `deepseek-ai/DeepSeek-OCR`
