@@ -82,3 +82,65 @@ benchmark/scientific_ocr/
 - Cost-first: `deepseek-ai/DeepSeek-OCR`
 - Balanced (strict): `deepseek-ai/DeepSeek-OCR`
 - Balanced (robust): `deepseek-ai/DeepSeek-OCR`
+
+## Interpretation (evidence-based)
+
+This section summarizes what the measured benchmark says, with supporting evidence from the locked gold set.
+
+### 1) Gold-set validity and run completeness
+
+- Gold-set coverage is complete: `68/68` benchmark pages have corresponding entries in `gold_labels_human.jsonl`.
+- OCR run coverage is complete for all models: each model returned `68/68` successful pages.
+
+Evidence:
+- `data/manifests/pages.jsonl` vs `data/gold/gold_labels_human.jsonl` sample-id coverage check: no missing/extra ids.
+- `results/metrics/model_summary.csv`: `n_eval_pages=68`, `n_ok=68`, `coverage=1.0` for all three models.
+
+### 2) Expected vs observed quality ranking
+
+Expected (prior): the larger/more expensive models might be more accurate on strict transcription metrics, while the cheapest model might be weaker but cost-efficient.
+
+Observed:
+- Strict accuracy (CER/WER/order/math aggregate) is best for `PaddlePaddle/PaddleOCR-VL-0.9B`.
+- Robust content recovery (token/character recall + order/math aggregate) is best for `allenai/olmOCR-2-7B-1025`.
+- `deepseek-ai/DeepSeek-OCR` is lowest-cost by a wide margin, but with materially weaker strict and robust accuracy.
+
+Evidence:
+- `results/metrics/model_summary.csv`
+  - Paddle: best strict profile (`mean_cer=0.4634`, `mean_wer=0.4732`, `mean_reading_order_f1=0.3751`, `mean_math_symbol_f1=0.7248`).
+  - OLM: best robust profile (`mean_token_recall=0.8146`, `mean_char_lcs_recall=0.8496`, `robust_accuracy_component=0.6659` vs Paddle `0.6651`).
+  - DeepSeek: lowest cost (`total_cost_usd=0.0041`) but lower quality (`mean_wer=0.6512`, `mean_reading_order_f1=0.1452`).
+
+### 3) Where models struggle most
+
+All models degrade most on table-heavy and multi-column pages; this is consistent with OCR reading-order and structure sensitivity.
+
+Evidence:
+- `results/metrics/tag_breakdown.csv`
+  - Paddle worst tags: `table` (`mean_wer=0.684`, `mean_reading_order_f1=0.248`), `multi_column` (`mean_wer=0.595`).
+  - OLM worst tags: `table` (`mean_wer=0.676`, `mean_reading_order_f1=0.159`), `diagram` (`mean_wer=0.601`).
+  - DeepSeek worst tags: `table` (`mean_wer=0.828`, `mean_reading_order_f1=0.032`), `multi_column` (`mean_wer=0.746`).
+
+### 4) Why strict metrics can look harsher than expected
+
+A non-trivial fraction of pages hit `CER=1`/`WER=1` even when token recall is high on some of those pages. This indicates heavy penalties from ordering/format differences and long-sequence edit distance effects, not only complete text failure.
+
+Evidence:
+- `results/metrics/per_page_scores.csv`
+  - Pages with `CER=1`: OLM `20`, Paddle `21`, DeepSeek `28`.
+  - Pages with `WER=1`: OLM `20`, Paddle `21`, DeepSeek `29`.
+  - Example pages with `CER=1` but high recall:
+    - Paddle `ece110__ab42139654__p0367`: `token_recall=0.978`, `reading_order_f1=0.727`.
+    - OLM `ece110__ab42139654__p0367`: `token_recall=0.966`, `reading_order_f1=0.667`.
+    - DeepSeek `math225__18210815f0__p0347`: `token_recall=0.990`, `reading_order_f1=0.056`.
+
+### 5) Practical conclusions
+
+- If the goal is highest strict transcription fidelity on this benchmark, prefer `PaddlePaddle/PaddleOCR-VL-0.9B`.
+- If the goal is strongest content recovery robustness, prefer `allenai/olmOCR-2-7B-1025`.
+- If the goal is minimum cost, prefer `deepseek-ai/DeepSeek-OCR`.
+- If using a balanced score, interpret it together with absolute quality metrics; DeepSeek wins balanced mostly because of cost dominance rather than best raw OCR fidelity.
+
+### 6) Important caveat
+
+Cost in this benchmark is estimated from prompt-token constant plus output-length heuristic because `pdfocr` JSONL output does not expose provider token usage fields. Relative quality comparisons are direct; cost comparisons are best treated as approximate.
