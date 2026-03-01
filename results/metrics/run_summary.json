@@ -1,0 +1,54 @@
+{
+  "created_at": "2026-03-01T11:33:42.131353+00:00",
+  "config_path": "/home/ageralis/pdfocr/benchmark/scientific_ocr/config/benchmark_config.json",
+  "runner": "pdfocr_all_pages",
+  "pdfocr_bin": "/home/ageralis/pdfocr/benchmark/scientific_ocr/pdfocr-linux-x86_64/pdfocr",
+  "pdfocr_config": "/home/ageralis/pdfocr/benchmark/scientific_ocr/pdfocr-linux-x86_64/config.json",
+  "consolidated_pdf": "/home/ageralis/pdfocr/benchmark/scientific_ocr/data/documents/benchmark_pages_all.pdf",
+  "page_count": 68,
+  "overall_prompt_tokens": 452642,
+  "overall_completion_tokens": 60575,
+  "overall_cost_usd": 0.06744818,
+  "models": [
+    {
+      "model": "allenai/olmOCR-2-7B-1025",
+      "model_slug": "allenai_olmocr_2_7b_1025",
+      "requests": 68,
+      "ok": 68,
+      "errors": 0,
+      "missing": 0,
+      "prompt_tokens": 195498,
+      "completion_tokens": 19842,
+      "cost_usd": 0.0213648,
+      "mean_latency_sec": 0.476907,
+      "pdfocr_exit_code": 0
+    },
+    {
+      "model": "PaddlePaddle/PaddleOCR-VL-0.9B",
+      "model_slug": "paddlepaddle_paddleocr_vl_0_9b",
+      "requests": 68,
+      "ok": 68,
+      "errors": 0,
+      "missing": 0,
+      "prompt_tokens": 197896,
+      "completion_tokens": 17896,
+      "cost_usd": 0.04202224,
+      "mean_latency_sec": 0.709335,
+      "pdfocr_exit_code": 0
+    },
+    {
+      "model": "deepseek-ai/DeepSeek-OCR",
+      "model_slug": "deepseek_ai_deepseek_ocr",
+      "requests": 68,
+      "ok": 68,
+      "errors": 0,
+      "missing": 0,
+      "prompt_tokens": 59248,
+      "completion_tokens": 22837,
+      "cost_usd": 0.00406114,
+      "mean_latency_sec": 1.805316,
+      "pdfocr_exit_code": 0
+    }
+  ],
+  "notes": "Token usage/cost is estimated in this runner because pdfocr stdout does not expose usage."
+}

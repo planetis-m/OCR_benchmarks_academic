@@ -1,0 +1,36 @@
+{
+  "created_at": "2026-03-01T12:12:36.241685+00:00",
+  "models_evaluated": 3,
+  "reference_source": "gold",
+  "gold_labels_path": "/home/ageralis/pdfocr/benchmark/scientific_ocr/data/gold/gold_labels_human.jsonl",
+  "recommendations": {
+    "accuracy_first_strict": {
+      "model": "PaddlePaddle/PaddleOCR-VL-0.9B",
+      "reason": "Highest strict score over CER/WER/layout/math."
+    },
+    "accuracy_first_robust": {
+      "model": "allenai/olmOCR-2-7B-1025",
+      "reason": "Highest robust score using token/character recall + layout/math."
+    },
+    "cost_first": {
+      "model": "deepseek-ai/DeepSeek-OCR",
+      "reason": "Lowest measured total benchmark cost."
+    },
+    "balanced_strict": {
+      "model": "deepseek-ai/DeepSeek-OCR",
+      "reason": "Best strict-accuracy/cost weighted score."
+    },
+    "balanced_robust": {
+      "model": "deepseek-ai/DeepSeek-OCR",
+      "reason": "Best robust-accuracy/cost weighted score."
+    }
+  },
+  "output_files": {
+    "model_summary_json": "/home/ageralis/pdfocr/benchmark/scientific_ocr/results/metrics/model_summary.json",
+    "model_summary_csv": "/home/ageralis/pdfocr/benchmark/scientific_ocr/results/metrics/model_summary.csv",
+    "model_summary_md": "/home/ageralis/pdfocr/benchmark/scientific_ocr/results/metrics/model_summary.md",
+    "per_page_scores_csv": "/home/ageralis/pdfocr/benchmark/scientific_ocr/results/metrics/per_page_scores.csv",
+    "tag_breakdown_csv": "/home/ageralis/pdfocr/benchmark/scientific_ocr/results/metrics/tag_breakdown.csv",
+    "recommendations_json": "/home/ageralis/pdfocr/benchmark/scientific_ocr/results/metrics/recommendations.json"
+  }
+}

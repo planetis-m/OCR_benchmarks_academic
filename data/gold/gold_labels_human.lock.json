@@ -1,0 +1,9 @@
+{
+  "created_at": "2026-03-01T10:53:38.922359+00:00",
+  "source_file": "benchmark/scientific_ocr/data/gold/gold_labels.jsonl",
+  "locked_file": "benchmark/scientific_ocr/data/gold/gold_labels_human.jsonl",
+  "line_count": 68,
+  "sha256": "796a69e61892606e0c8186f5d2bf6b7bb134ace909ed30ee5c8d5901646b452d",
+  "lock_policy": "read_only_file + checksum_manifest",
+  "note": "Treat this file as immutable benchmark ground truth until intentionally re-locked."
+}

@@ -1,0 +1,31 @@
+{
+  "ocr_request": {
+    "api_url": "https://api.deepinfra.com/v1/openai/chat/completions",
+    "prompt": "Extract all readable text exactly. Preserve line breaks and reading order.",
+    "prompt_tokens_per_page_estimate": 3000
+  },
+  "models": [
+    {
+      "id": "allenai/olmOCR-2-7B-1025",
+      "price_per_million_input": 0.09,
+      "price_per_million_output": 0.19
+    },
+    {
+      "id": "PaddlePaddle/PaddleOCR-VL-0.9B",
+      "price_per_million_input": 0.14,
+      "price_per_million_output": 0.80
+    },
+    {
+      "id": "deepseek-ai/DeepSeek-OCR",
+      "price_per_million_input": 0.03,
+      "price_per_million_output": 0.10
+    }
+  ],
+  "paths": {
+    "gold_labels_path": "benchmark/scientific_ocr/data/gold/gold_labels_human.jsonl",
+    "manifests_dir": "benchmark/scientific_ocr/data/manifests",
+    "raw_results_dir": "benchmark/scientific_ocr/results/raw",
+    "ocr_text_dir": "benchmark/scientific_ocr/results/ocr_text",
+    "metrics_dir": "benchmark/scientific_ocr/results/metrics"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "accuracy_first_strict": {
+    "model": "PaddlePaddle/PaddleOCR-VL-0.9B",
+    "reason": "Highest strict score over CER/WER/layout/math."
+  },
+  "accuracy_first_robust": {
+    "model": "allenai/olmOCR-2-7B-1025",
+    "reason": "Highest robust score using token/character recall + layout/math."
+  },
+  "cost_first": {
+    "model": "deepseek-ai/DeepSeek-OCR",
+    "reason": "Lowest measured total benchmark cost."
+  },
+  "balanced_strict": {
+    "model": "deepseek-ai/DeepSeek-OCR",
+    "reason": "Best strict-accuracy/cost weighted score."
+  },
+  "balanced_robust": {
+    "model": "deepseek-ai/DeepSeek-OCR",
+    "reason": "Best robust-accuracy/cost weighted score."
+  }
+}
