@@ -8,14 +8,14 @@ Benchmark for academic lecture slides using DeepInfra OCR models:
 
 ## Active pipeline
 
-1. `run_benchmark.py`
+1. `scripts/run_benchmark.py`
    - uses bundled binary:
-     - `benchmark/scientific_ocr/pdfocr-linux-x86_64/pdfocr`
-   - runs `pdfocr <benchmark_pages_all.pdf> --all-pages` once per model
+     - `pdfocr-linux-x86_64/pdfocr`
+   - runs `pdfocr data/documents/benchmark_pages_all.pdf --all-pages` once per model
    - updates `pdfocr-linux-x86_64/config.json` model field per run
    - writes OCR outputs to `results/ocr_text/*.jsonl`
 
-2. `evaluate_benchmark.py`
+2. `scripts/evaluate_benchmark.py`
    - evaluates OCR outputs against locked gold labels:
      - `data/gold/gold_labels_human.jsonl`
    - writes metrics and recommendations in `results/metrics/`
@@ -23,44 +23,44 @@ Benchmark for academic lecture slides using DeepInfra OCR models:
 ## Run
 
 ```bash
-python3 benchmark/scientific_ocr/scripts/run_benchmark.py
-python3 benchmark/scientific_ocr/scripts/evaluate_benchmark.py
+python3 scripts/run_benchmark.py
+python3 scripts/evaluate_benchmark.py
 ```
 
 Or:
 
 ```bash
-bash benchmark/scientific_ocr/scripts/run_all.sh
+bash scripts/run_all.sh
 ```
 
 ## Current layout
 
 ```text
-benchmark/scientific_ocr/
-  config/
-    benchmark_config.json
-  data/
-    documents/
-      benchmark_pages_all.pdf
-    manifests/
-      documents.jsonl
-      pages.jsonl
-      selection_summary.json
-    gold/
-      gold_labels_human.jsonl
-      gold_labels_human.lock.json
-  pdfocr-linux-x86_64/
-    pdfocr
-    config.json
-    libpdfium.so
-  scripts/
-    run_benchmark.py
-    evaluate_benchmark.py
-    run_all.sh
-  results/
-    ocr_text/
-    raw/
-    metrics/
+.
+|-- config/
+|   `-- benchmark_config.json
+|-- data/
+|   |-- documents/
+|   |   `-- benchmark_pages_all.pdf
+|   |-- manifests/
+|   |   |-- documents.jsonl
+|   |   |-- pages.jsonl
+|   |   `-- selection_summary.json
+|   `-- gold/
+|       |-- gold_labels_human.jsonl
+|       `-- gold_labels_human.lock.json
+|-- pdfocr-linux-x86_64/
+|   |-- pdfocr
+|   |-- config.json
+|   `-- libpdfium.so
+|-- scripts/
+|   |-- run_benchmark.py
+|   |-- evaluate_benchmark.py
+|   `-- run_all.sh
+`-- results/
+    |-- ocr_text/
+    |-- raw/
+    `-- metrics/
 ```
 
 ## Notes
